@@ -40,5 +40,8 @@ Veritabanı	PostgreSQL	Kullanıcı, etkinlik, kulüp ve katılım verilerinin il
 Sistemin arka planında çalışacak temel veritabanı tabloları aşağıda planlanmıştır:
 Users (Kullanıcılar): id, ad_soyad, email, sifre_hash, rol (Öğrenci / Kulüp Yöneticisi)
 Clubs (Kulüpler): id, kulup_adi, aciklama, logo_url, yonetici_id
+
+
+https://share.gemini.google/cdBRrtNUR55B
 Events (Etkinlikler): id, baslik, aciklama, kategori, tarih_saat, konum, kulup_id, kapasite
 Favorites / Bookmarks (Katılmak İstediklerim): id, kullanici_id, etkinlik_id, eklenme_tarihi
