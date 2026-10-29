@@ -80,6 +80,8 @@ Arama ve Filtreleme: Kullanıcı arama çubuğuna bir şeyler yazdığında veya
 
 Katılmak İstediklerim Listesi: Kullanıcı bir etkinliğe "Katıl" dediğinde, bu veriyi tarayıcının hafızasında (localStorage) ya da giriş yapmışsa veritabanında saklayın.
 
-Filtre Butonları: Tümü, Teknoloji, Kültür & Sanat, Spor, Atölyeler.
+https://share.gemini.google/oXGh44YI72CN
+
+
 
 Etkinlik Kartları: Görsel/Renk alanı, Tari
