@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KampüsEtkinlik — Üniversite Etkinlik Platformu</title>
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --bg-light: #f8f9fa;
+      --text-dark: #1d1d1f;
+      --text-muted: #6e6e73;
+      --border-radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #fff; color: var(--text-dark); line-height: 1.6; }
+
+    /* Navbar */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 8%; border-bottom: 1px solid #eee;
+    }
+    .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); text-decoration: none; }
+    nav a { margin: 0 15px; text-decoration: none; color: var(--text-dark); font-weight: 500; }
+    .nav-btns .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 0.6rem 1.2rem; border-radius: 20px; font-weight: 600; cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      padding: 4rem 8%; background-color: #fafafa;
+    }
+    .hero-content { flex: 1; min-width: 300px; padding-right: 2rem; }
+    .hero-tag { background: #ffe8e0; color: var(--primary); padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; }
+    .hero h1 { font-size: 2.8rem; margin: 1rem 0; line-height: 1.2; }
+    .hero p { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    .search-bar {
+      display: flex; background: #fff; border: 1px solid #ddd; padding: 6px;
+      border-radius: 30px; max-width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .search-bar input { border: none; outline: none; padding: 8px 15px; flex: 1; font-size: 0.95rem; }
+    .search-bar button { background: var(--primary); border: none; color: #fff; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
+
+    /* Stats */
+    .stats { display: flex; gap: 2rem; margin-top: 2rem; }
+    .stat-item h3 { font-size: 1.5rem; }
+    .stat-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Featured Event Card */
+    .featured-card {
+      flex: 0.8; min-width: 320px; background: linear-gradient(135deg, #ff9f43, #ff5252);
+      border-radius: 20px; color: #fff; padding: 2rem; position: relative; box-shadow: 0 10px 20px rgba(255,107,53,0.2);
+    }
+    .featured-card .badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; }
+    .featured-card h2 { margin: 2rem 0 1rem 0; font-size: 1.8rem; }
+    .featured-details { background: #fff; color: var(--text-dark); padding: 1rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Events Section */
+    .events-section { padding: 3rem 8%; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .categories { display: flex; gap: 8px; flex-wrap: wrap; }
+    .category-btn {
+      padding: 6px 16px; border: 1px solid #ddd; border-radius: 20px;
+      background: #fff; cursor: pointer; font-size: 0.9rem;
+    }
+    .category-btn.active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .card { border-radius: var(--border-radius); overflow: hidden; background: #fff; border: 1px solid #eee; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-4px); }
+    .card-banner { height: 140px; position: relative; padding: 1rem; color: #fff; font-weight: bold; }
+    .tech { background: #6c5ce7; }
+    .culture { background: #fd79a8; }
+    .sports { background: #00b894; }
+    .date-badge { position: absolute; top: 10px; right: 10px; background: #fff; color: #000; padding: 6px 10px; border-radius: 8px; text-align: center; font-size: 0.8rem; }
+    .card-body { padding: 1rem; }
+    .card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .btn-favorite { background: #f0f0f0; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
+    .btn-favorite.added { background: #ffe8e0; color: var(--primary); font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo">KampüsEtkinlik</a>
+    <nav>
+      <a href="#">Etkinlikler</a>
+      <a href="#">Kategoriler</a>
+      <a href="#">Kulüpler</a>
+      <a href="#">Katılmak İstediklerim (<span id="fav-count">0</span>)</a>
+    </nav>
+    <div class="nav-btns">
+      <button class="btn-primary">Etkinlik Oluştur</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">📍 Üniversiten tek bir yerde</span>
+      <h1>Kampüs etkinliklerini keşfet ve katıl.</h1>
+      <p>Yazılım hackathonlarından kültür gecelerine kadar kampusünde ne olduğunu saniyeler içinde öğren.</p>
+      
+      <div class="search-bar">
+        <input type="text" placeholder="Etkinlik, kulüp veya atölye ara...">
+        <button>Ara</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat-item"><h3>240+</h3><p>Etkinlik</p></div>
+        <div class="stat-item"><h3>18K</h3><p>Kayıt</p></div>
+        <div class="stat-item"><h3>60+</h3><p>Kulüp</p></div>
+      </div>
+    </div>
+
+    <!-- Öne Çıkan Etkinlik -->
+    <div class="featured-card">
+      <span class="badge">ÖNE ÇIKAN • TEKNOLOJİ</span>
+      <h2>Yazılım & Yapay Zeka Zirvesi 2026</h2>
+      <div class="featured-details">
+        <div>
+          <small>📅 24 Haziran 2026</small><br>
+          <small>📍 Ana Amfi Salonu</small>
+        </div>
+        <button class="btn-primary" onclick="alert('Kayıt Oluşturuldu!')">Kayıt Ol</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section class="events-section">
+    <div class="section-header">
+      <h2>Yaklaşan Etkinlikler</h2>
+      <div class="categories">
+        <button class="category-btn active">Tümü</button>
+        <button class="category-btn">Teknoloji</button>
+        <button class="category-btn">Kültür & Sanat</button>
+        <button class="category-btn">Spor</button>
+        <button class="category-btn">Atölyeler</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid">
+      <div class="card">
+        <div class="card-banner tech">
+          Teknoloji
+          <div class="date-badge"><b>24</b><br>HAZ</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Hackathon: Geleceği İnşa Et</h3>
+          <p style="font-size: 0.85rem; color: #666;">24 Saatlik Kodlama Yarışması</p>
+          <button class="btn-favorite" onclick="toggleFav(this)">+ Katılmak İstediklerime Ekle</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-banner culture">
+          Kültür & Sanat
+          <div class="date-badge"><b>26</b><br>HAZ</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Tiyatro Kulübü Oyunu</h3>
+          <p style="font-size: 0.85rem; color: #666;">Kültür Merkezi Sahnesi</p>
+          <button class="btn-favorite" onclick="toggleFav(this)">+ Katılmak İstediklerime Ekle</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-banner sports">
+          Spor
+          <div class="date-badge"><b>28</b><br>HAZ</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Fakülteler Arası Futbol Turnuvası</h3>
+          <p style="font-size: 0.85rem; color: #666;">Kampüs Spor Tesisleri</p>
+          <button class="btn-favorite" onclick="toggleFav(this)">+ Katılmak İstediklerime Ekle</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let favCount = 0;
+    function toggleFav(btn) {
+      if (!btn.classList.contains('added')) {
+        btn.classList.add('added');
+        btn.innerText = '✓ Listede';
+        favCount++;
+      } else {
+        btn.classList.remove('added');
+        btn.innerText = '+ Katılmak İstediklerime Ekle';
+        favCount--;
+      }
+      document.getElementById('fav-count').innerText = favCount;
+    }
+  </script>
+</body>
+</html>
